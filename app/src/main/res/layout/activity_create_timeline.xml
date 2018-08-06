@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateTimelineActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_weight="1"
+        android:text="Event "
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/event_value"
+        android:layout_alignBottom="@id/event"
+        android:layout_toRightOf="@id/event"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        app:layout_constraintStart_toEndOf="@+id/event"
+        app:layout_constraintTop_toTopOf="@+id/event" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/event"
+        android:layout_alignLeft="@id/event"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:text="Date "
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/date_editText"
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/event_value"
+        android:layout_below="@+id/event"
+        android:ems="10"
+        android:hint="01/01/1992"
+        android:inputType="none" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event"
+        android:layout_toRightOf="@id/date_editText"
+        android:layout_marginLeft="15dp"
+        android:onClick="setDate"
+        app:srcCompat="@drawable/date_range" />
+
+
+
+</RelativeLayout>

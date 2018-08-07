@@ -58,7 +58,7 @@
         android:layout_alignLeft="@+id/event_value"
         android:layout_below="@+id/event"
         android:ems="10"
-        android:hint="01/01/1992"
+        android:hint="15/08/1957"
         android:inputType="none" />
 
     <ImageButton
@@ -71,6 +71,15 @@
         android:onClick="setDate"
         app:srcCompat="@drawable/date_range" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sucess_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="208dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/done" />
 
 
 </RelativeLayout>

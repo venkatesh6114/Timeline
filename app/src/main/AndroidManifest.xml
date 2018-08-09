@@ -22,7 +22,8 @@
         <activity
             android:name=".CreateTimelineActivity"
             android:label="@string/title_activity_create_timeline"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TodoCursorAdapter"></activity>
     </application>
 
 </manifest>

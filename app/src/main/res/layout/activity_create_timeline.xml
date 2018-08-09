@@ -35,7 +35,8 @@
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="5"
+        android:ems="30"
+        android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/event"
         app:layout_constraintTop_toTopOf="@+id/event" />
 
@@ -58,8 +59,9 @@
         android:layout_alignLeft="@+id/event_value"
         android:layout_below="@+id/event"
         android:ems="10"
-        android:hint="15/08/1957"
-        android:inputType="none" />
+        android:focusable="false"
+        android:hint="dd/mm/yyyy"
+        android:inputType="date" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -80,6 +82,7 @@
         android:layout_marginTop="208dp"
         android:clickable="true"
         app:srcCompat="@drawable/done" />
+
 
 
 </RelativeLayout>

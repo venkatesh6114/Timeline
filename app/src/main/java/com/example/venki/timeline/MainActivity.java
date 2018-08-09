@@ -1,7 +1,9 @@
 package com.example.venki.timeline;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.FloatingActionButton;
@@ -12,16 +14,22 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.CursorAdapter;
 import android.widget.Toast;
 //import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final int CREATE_EVENT=100;
+    private String TAG="Timeline";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("test","onCreate()");
+        Log.e(TAG,"onCreate()");
 
       Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,28 +39,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,CreateTimelineActivity.class);
-                startActivity(i);
+                startActivityForResult(i,CREATE_EVENT);
             }
         });
 
+        TodoCursorAdapter handler = new TodoCursorAdapter(this);
+
     }
 
-    @Override
-    protected void onStart() {
-        Log.e("test","onStart()");
-        super.onStart();
-    }
+
 
     @Override
     protected void onResume() {
-        Log.e("test","onResume");
+        Log.e(TAG,"onResume");
         super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e(TAG,"onActivityForResult");
+        if(requestCode == CREATE_EVENT) {
+            if (resultCode == RESULT_OK)
+                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        Log.e("test","onCreateOptionsMenu()");
 
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

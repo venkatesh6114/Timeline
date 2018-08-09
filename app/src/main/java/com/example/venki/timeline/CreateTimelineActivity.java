@@ -38,7 +38,10 @@ public class CreateTimelineActivity extends AppCompatActivity {
         event = findViewById(R.id.event_value);
         date = findViewById(R.id.date_editText);
         date.setInputType(InputType.TYPE_NULL);
-//        date.setText(new StringBuilder().append(calendar.get(calendar.YEAR)).append("/").append(doubleDigit(calendar.get(calendar.MONTH)+1)).append("/").append(doubleDigit(calendar.get(calendar.DAY_OF_MONTH))));
+
+
+        date.setText(new StringBuilder().append(calendar.get(Calendar.YEAR)).append("/").append(doubleDigit(calendar.get(calendar.MONTH)+1)).append("/").append(doubleDigit(calendar.get(calendar.DAY_OF_MONTH))));
+
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,12 +63,22 @@ public class CreateTimelineActivity extends AppCompatActivity {
                 String e = event.getText().toString();
                 String d = date.getText().toString();
 
-                SQLiteDatabase db = openOrCreateDatabase("timeline",MODE_PRIVATE,null);
-                db.execSQL("CREATE TABLE IF NOT EXISTS TimelineList(event VARCHAR,date DATE)");
-                ContentValues cv = new ContentValues();
-                cv.put("event",e);
-                cv.put("date",d);
-                db.insert("TimelineList",null,cv);
+                if(!e.isEmpty() && !d.isEmpty()) {
+                    SQLiteDatabase db = openOrCreateDatabase("timeline", MODE_PRIVATE, null);
+                    db.execSQL("CREATE TABLE IF NOT EXISTS events(event VARCHAR,date DATE)");
+                    ContentValues cv = new ContentValues();
+                    cv.put("event", e);
+                    cv.put("date", d);
+                    long insertStatus = db.insert("events", null, cv);
+                    Log.e(TAG,""+e);
+                    Log.e(TAG,""+d);
+                    Log.e(TAG,""+insertStatus);
+                    if(insertStatus == -1)
+                        setResult(RESULT_CANCELED);
+                    else
+                        setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
     }

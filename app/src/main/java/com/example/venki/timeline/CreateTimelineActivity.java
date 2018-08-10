@@ -2,6 +2,7 @@ package com.example.venki.timeline;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -64,23 +65,15 @@ public class CreateTimelineActivity extends AppCompatActivity {
                 String d = date.getText().toString();
 
                 if(!e.isEmpty() && !d.isEmpty()) {
-                    SQLiteDatabase db = openOrCreateDatabase("timeline", MODE_PRIVATE, null);
-                    db.execSQL("CREATE TABLE IF NOT EXISTS events(event VARCHAR,date DATE)");
-                    ContentValues cv = new ContentValues();
-                    cv.put("event", e);
-                    cv.put("date", d);
-                    long insertStatus = db.insert("events", null, cv);
-                    Log.e(TAG,""+e);
-                    Log.e(TAG,""+d);
-                    Log.e(TAG,""+insertStatus);
-                    if(insertStatus == -1)
-                        setResult(RESULT_CANCELED);
-                    else
-                        setResult(RESULT_OK);
+                    Intent newIntent = getIntent();
+                    newIntent.putExtra("event_name",e);
+                    newIntent.putExtra("event_date",d);
+                    setResult(RESULT_OK,newIntent);
                     finish();
                 }
             }
         });
+
     }
 
     public void setDate(View view){

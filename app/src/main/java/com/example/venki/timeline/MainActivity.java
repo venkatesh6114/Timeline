@@ -59,13 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHelper = new EventDatabaseHelper(this);
 
-        new Handler().post(new Runnable() {
+/*        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getData());
                 listView.setAdapter(cursorAdapter);
             }
         });
+        */
     }
 
 
@@ -73,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         Log.e(TAG,"onResume");
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getData());
+                listView.setAdapter(cursorAdapter);
+            }
+        });
         super.onResume();
     }
 
@@ -80,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.e(TAG,"onActivityForResult");
         if(requestCode == CREATE_EVENT && resultCode == RESULT_OK) {
-            databaseHelper.insertData(data.getExtras().getString("event_name"),data.getExtras().getString("event_date"));
+            databaseHelper.insertData(data.getExtras().getString("event_date"),data.getExtras().getString("event_name"));
 
         }
         super.onActivityResult(requestCode, resultCode, data);

@@ -26,7 +26,7 @@ public class TodoCursorAdapter extends CursorAdapter {
         TextView events = view.findViewById(R.id.list_events);
         event_date.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
         events.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
-        Log.e("Timeline",cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
-        Log.e("Timeline",cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
+        Log.e("Timeline:date",cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
+        Log.e("Timeline:event",cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
     }
 }

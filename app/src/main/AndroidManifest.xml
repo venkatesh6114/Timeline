@@ -19,10 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+<!--        <activity
             android:name=".CreateTimelineActivity"
             android:label="@string/title_activity_create_timeline"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@android:style/ThemeOverlay.Material.Dialog" />
+
+            -->
+
         <activity android:name=".TodoCursorAdapter"></activity>
     </application>
 

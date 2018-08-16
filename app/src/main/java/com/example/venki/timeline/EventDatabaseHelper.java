@@ -24,14 +24,40 @@ public class EventDatabaseHelper {
          database = openHelper.getWritableDatabase();
      }
 
-     public long insertData(String date, String event){
+     public void insertData(String date, String event){
+         Cursor cursor = getDataEvent(date);
+
+//         Log.e("timeline","Cursor.getCount():"+cursor.getCount());
+
+         String oldEvent="";
+         if (cursor.moveToFirst()){
+             do{
+                 oldEvent = cursor.getString(cursor.getColumnIndex(COLUMN_EVENT));
+             }while(cursor.moveToNext());
+         }
+         cursor.close();
+
+ //        Log.e("timeline","OLD Event:"+oldEvent);
+
          ContentValues cv = new ContentValues();
          cv.put(COLUMN_DATE, date);
-         cv.put(COLUMN_EVENT, event);
-         return database.insert(TABLE_NAME, null, cv);
+
+         if(cursor.getCount()>0) {
+             cv.put(COLUMN_EVENT, oldEvent+"\n"+event);
+             database.update(TABLE_NAME, cv, COLUMN_DATE + " = ? ", new String[]{date});
+         }
+         else {
+             cv.put(COLUMN_EVENT, event);
+             database.insert(TABLE_NAME, null, cv);
+         }
      }
 
-     public Cursor getData(){
+     public Cursor getDataEvent(String date){
+            String query = "SELECT * from "+TABLE_NAME+" where "+COLUMN_DATE+" = '"+date+"'";
+            return database.rawQuery(query,null);
+     }
+
+     public Cursor getAllEvent(){
         String query = "SELECT * from "+TABLE_NAME;
         return database.rawQuery(query,null);
      }
@@ -46,13 +72,11 @@ public class EventDatabaseHelper {
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             String query = "CREATE TABLE "+TABLE_NAME+"( "+COLUMN_ID+" INTEGER PRIMARY KEY,"+
                     COLUMN_DATE+" DATE,"+COLUMN_EVENT+" TEXT)";
-            Log.e(TAG,"in onCreate "+query);
             sqLiteDatabase.execSQL(query);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-            Log.e(TAG,"in onUpgrade");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.venki.timeline;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class CreateTimelineActivity extends AppCompatActivity {
+public class CreateTimelineActivity extends Activity {
 
     private EditText date;
     private EditText event;
@@ -32,9 +33,9 @@ public class CreateTimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+    /*    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        calendar = Calendar.getInstance();
+      */  calendar = Calendar.getInstance();
 
         event = findViewById(R.id.event_value);
         date = findViewById(R.id.date_editText);
@@ -57,7 +58,7 @@ public class CreateTimelineActivity extends AppCompatActivity {
             }
         });
 
-        sucessButton = (ImageButton)findViewById(R.id.sucess_button);
+/*        sucessButton = (ImageButton)findViewById(R.id.sucess_button);
         sucessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +74,7 @@ public class CreateTimelineActivity extends AppCompatActivity {
                 }
             }
         });
-
+*/
     }
 
     public void setDate(View view){

@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 //import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  InputEventDialog.InputEventDialogInterface {
 
     static final int CREATE_EVENT=100;
     private String TAG="Timeline";
@@ -40,12 +40,17 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Intent i = new Intent(MainActivity.this,CreateTimelineActivity.class);
                 startActivityForResult(i,CREATE_EVENT);
+                */
+                InputEventDialog inputEventDialog = new InputEventDialog();
+                inputEventDialog.show(getSupportFragmentManager(),"input event dialog");
             }
         });
 
@@ -59,32 +64,39 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHelper = new EventDatabaseHelper(this);
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getAllEvent());
+                listView.setAdapter(cursorAdapter);
+            }
+        });
+
+    }
+
+    @Override
+    public void attachTexts(String date, String event) {
+        Log.e(TAG,"date:"+date);
+        Log.e(TAG,"event:"+event);
+        databaseHelper.insertData(date,event);
+        cursorAdapter.swapCursor(databaseHelper.getAllEvent());
+ //        cursorAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e(TAG,"onResume");
 /*        new Handler().post(new Runnable() {
             @Override
             public void run() {
                 cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getData());
                 listView.setAdapter(cursorAdapter);
             }
-        });
-        */
-    }
-
-
-
-    @Override
-    protected void onResume() {
-        Log.e(TAG,"onResume");
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getData());
-                listView.setAdapter(cursorAdapter);
-            }
-        });
+        });*/
         super.onResume();
     }
 
-    @Override
+/*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.e(TAG,"onActivityForResult");
         if(requestCode == CREATE_EVENT && resultCode == RESULT_OK) {
@@ -93,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

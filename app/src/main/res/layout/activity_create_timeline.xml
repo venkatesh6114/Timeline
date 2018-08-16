@@ -7,82 +7,40 @@
     tools:context=".CreateTimelineActivity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_weight="1"
-        android:text="Event "
-        android:textColor="@android:color/black"
-        android:textSize="24sp" />
-
     <EditText
         android:id="@+id/event_value"
-        android:layout_alignBottom="@id/event"
-        android:layout_toRightOf="@id/event"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="30"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/event"
-        app:layout_constraintTop_toTopOf="@+id/event" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/event"
-        android:layout_alignLeft="@id/event"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:text="Date "
-        android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:hint="Event"
+/>
 
     <EditText
         android:id="@+id/date_editText"
         android:layout_width="162dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/event_value"
-        android:layout_below="@+id/event"
+        android:layout_below="@+id/event_value"
+        android:layout_marginTop="10dp"
+        android:digits="10"
         android:ems="10"
         android:focusable="false"
-        android:hint="dd/mm/yyyy"
+        android:hint="YYYY/MM/DD"
         android:inputType="date" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/event"
+        android:layout_below="@id/event_value"
+        android:layout_marginLeft="3dp"
         android:layout_toRightOf="@id/date_editText"
-        android:layout_marginLeft="15dp"
+        android:background="@android:color/transparent"
         android:onClick="setDate"
+        android:padding="20dp"
         app:srcCompat="@drawable/date_range" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/sucess_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="208dp"
-        android:clickable="true"
-        app:srcCompat="@drawable/done" />
-
 
 
 </RelativeLayout>

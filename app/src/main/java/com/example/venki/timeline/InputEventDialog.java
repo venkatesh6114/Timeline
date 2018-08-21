@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 public class InputEventDialog extends AppCompatDialogFragment {
@@ -38,23 +39,24 @@ public class InputEventDialog extends AppCompatDialogFragment {
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.activity_create_timeline,null);
 
+        calendar = Calendar.getInstance();
         event_textField = view.findViewById(R.id.event_value);
         date_textField = view.findViewById(R.id.date_editText);
+        date_textField.setText(getCurrentDate());
         datePicker = view.findViewById(R.id.imageButton);
 
-        calendar = Calendar.getInstance();
 
         date_textField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate();
+                showPickerDialog();
             }
         });
 
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate();
+                showPickerDialog();
             }
         });
 
@@ -72,19 +74,28 @@ public class InputEventDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String event_name = event_textField.getText().toString();
                         String date = date_textField.getText().toString();
-                        inputEventDialogInterface.attachTexts(date,event_name);
-                        //Toast.makeText(getContext(),"Positive button",Toast.LENGTH_LONG).show();
+
+                        if(!event_name.isEmpty()) {
+                            if(!date.isEmpty())
+                                inputEventDialogInterface.attachTexts(date, event_name);
+                            else
+                                inputEventDialogInterface.attachTexts(getCurrentDate(),event_name);
+                            canCloseDialog(dialogInterface,true);
+                        }
+                        else
+                            canCloseDialog(dialogInterface,false);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getContext(),"Negative button",Toast.LENGTH_LONG).show();
+                        canCloseDialog(dialogInterface,true);
                     }
                 });
 
         return builder.create();
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -96,11 +107,22 @@ public class InputEventDialog extends AppCompatDialogFragment {
         }
     }
 
-    private void setDate(){
-        new DatePickerDialog(getContext(),date_range_listener,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    private void canCloseDialog(DialogInterface dialogInterface, boolean canClose){
+        try {
+            Field field = dialogInterface.getClass().getSuperclass().getDeclaredField("mShowing");
+            field.setAccessible(true);
+            field.set(dialogInterface,canClose);
+        }catch(NoSuchFieldException e){}
+        catch (IllegalAccessException e){}
+    }
+
+
+    private String getCurrentDate() {
+        return new StringBuilder().append(doubleDigit(calendar.get(Calendar.DAY_OF_MONTH)))
+                            .append("/")
+                            .append(doubleDigit(calendar.get(Calendar.MONTH)))
+                            .append("/")
+                            .append(calendar.get(Calendar.YEAR)).toString();
     }
 
     private String doubleDigit(int a){
@@ -109,13 +131,24 @@ public class InputEventDialog extends AppCompatDialogFragment {
 
     private DatePickerDialog.OnDateSetListener date_range_listener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
             date_textField.setText(new StringBuilder()
-                            .append(i)
-                            .append("/").append(doubleDigit(i1+1))
-                            .append("/").append(doubleDigit(i2)));
+                            .append(doubleDigit(day))
+                            .append("/").append(doubleDigit(month+1))
+                            .append("/").append(year));
         }
     };
+
+    private void showPickerDialog(){
+        String fieldDate = date_textField.getText().toString();
+        int day = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[0])));
+        int month = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[1])-1));
+        int year = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[2])));
+        new DatePickerDialog(getContext(),date_range_listener,
+                year,
+                month,
+                day).show();
+    }
 
     protected interface InputEventDialogInterface{
         void attachTexts(String date,String event);

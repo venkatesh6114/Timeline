@@ -9,17 +9,19 @@
 
     <EditText
         android:id="@+id/event_value"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:autoText="true"
         android:ems="30"
-        android:singleLine="true"
         android:hint="Event"
-/>
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/date_editText"
-        android:layout_width="162dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/event_value"
         android:layout_below="@+id/event_value"
@@ -28,7 +30,8 @@
         android:ems="10"
         android:focusable="false"
         android:hint="DD/MM/YYYY"
-        android:inputType="date" />
+        android:inputType="date"
+        android:maxEms="10" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -41,6 +44,17 @@
         android:onClick="setDate"
         android:padding="20dp"
         app:srcCompat="@drawable/date_range" />
+
+    <TextView
+        android:id="@+id/event_err_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/event_value"
+        android:layout_below="@+id/date_editText"
+        android:layout_marginTop="3dp"
+        android:text="@string/event_err_msg"
+        android:textColor="@android:color/holo_red_light"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>

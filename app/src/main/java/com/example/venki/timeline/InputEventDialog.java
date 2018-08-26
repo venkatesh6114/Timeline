@@ -8,10 +8,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -30,8 +33,11 @@ public class InputEventDialog extends AppCompatDialogFragment {
     private Calendar calendar;
     private ImageButton datePicker;
     private InputEventDialogInterface inputEventDialogInterface;
+    private Handler mHandler;
+    private DialogInterface tmpDialogInterface;
+    private TextView event_err_msg;
 
-    @Override
+   @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Log.e("Timeline","onCreateDialog(bundle)");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -44,7 +50,14 @@ public class InputEventDialog extends AppCompatDialogFragment {
         date_textField = view.findViewById(R.id.date_editText);
         date_textField.setText(getCurrentDate());
         datePicker = view.findViewById(R.id.imageButton);
+        event_err_msg = view.findViewById(R.id.event_err_msg);
 
+        event_textField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                event_err_msg.setVisibility(View.INVISIBLE);
+            }
+        });
 
         date_textField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +73,8 @@ public class InputEventDialog extends AppCompatDialogFragment {
             }
         });
 
+        mHandler = new Handler(Looper.getMainLooper());
+        Log.e("Timeline>> :",getClass().getSuperclass().toString());
         TextView title = new TextView(getContext());
         title.setGravity(Gravity.CENTER);
         title.setText("Create Event");
@@ -74,7 +89,7 @@ public class InputEventDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String event_name = event_textField.getText().toString();
                         String date = date_textField.getText().toString();
-
+                        tmpDialogInterface = dialogInterface;
                         if(!event_name.isEmpty()) {
                             if(!date.isEmpty())
                                 inputEventDialogInterface.attachTexts(date, event_name);
@@ -82,8 +97,22 @@ public class InputEventDialog extends AppCompatDialogFragment {
                                 inputEventDialogInterface.attachTexts(getCurrentDate(),event_name);
                             canCloseDialog(dialogInterface,true);
                         }
-                        else
-                            canCloseDialog(dialogInterface,false);
+                        else {
+                            canCloseDialog(dialogInterface, false);
+                            event_err_msg.setVisibility(View.VISIBLE);
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    event_err_msg.setVisibility(View.INVISIBLE);
+                                }
+                            },3000);
+                        }
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                canCloseDialog(tmpDialogInterface,true);
+                            }
+                        },50);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -91,7 +120,14 @@ public class InputEventDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         canCloseDialog(dialogInterface,true);
                     }
-                });
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        Log.e("Timeline:","in onDismiss");
+                    }
+                })
+                ;
 
         return builder.create();
     }

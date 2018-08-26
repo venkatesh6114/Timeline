@@ -1,6 +1,7 @@
 package com.example.venki.timeline;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
                 Intent i = new Intent(MainActivity.this,CreateTimelineActivity.class);
                 startActivityForResult(i,CREATE_EVENT);
                 */
+
                 InputEventDialog inputEventDialog = new InputEventDialog();
                 inputEventDialog.show(getSupportFragmentManager(),"input event dialog");
             }

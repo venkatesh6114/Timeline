@@ -12,6 +12,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
     private TodoCursorAdapter cursorAdapter;
     private Toolbar toolbar;
     private ListView listView;
+    private RecyclerView recyclerView;
+    private TimelineAdapter tlAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
                 inputEventDialog.show(getSupportFragmentManager(),"input event dialog");
             }
         });
-
+/*
         listView = findViewById(R.id.event_listview);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,17 +70,36 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
                 Log.e(TAG,"Clicked on item:"+position);
             }
         });
+*/
 
         databaseHelper = new EventDatabaseHelper(this);
 
-        new Handler().post(new Runnable() {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getAllEvent());
-                listView.setAdapter(cursorAdapter);
+            public void onClick(View view) {
+                Log.e(TAG,"RecyclerView on Clicked");
             }
         });
+        recyclerView.setHasFixedSize(true);
 
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        tlAdapter = new TimelineAdapter();
+        recyclerView.setAdapter(tlAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+/*        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+     //           cursorAdapter = new TodoCursorAdapter(MainActivity.this,databaseHelper.getAllEvent());
+  //              listView.setAdapter(cursorAdapter);
+
+            }
+        });
+*/
     }
 
     @Override

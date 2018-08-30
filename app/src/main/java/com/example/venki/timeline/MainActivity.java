@@ -25,6 +25,8 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 //import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements  InputEventDialog.InputEventDialogInterface {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
     private RecyclerView recyclerView;
     private TimelineAdapter tlAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<DataModel> dataModelArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +89,12 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        tlAdapter = new TimelineAdapter();
-        recyclerView.setAdapter(tlAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        dataModelArrayList = new ArrayList<DataModel>();
+
+        tlAdapter = new TimelineAdapter(getStringArray(databaseHelper.getAllEvent()));
+        recyclerView.setAdapter(tlAdapter);
 
 /*        new Handler().post(new Runnable() {
             @Override
@@ -102,12 +107,28 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
 */
     }
 
+    public ArrayList<DataModel> getStringArray(Cursor cursor){
+        if(cursor!=null) {
+            cursor.moveToFirst();
+            do {
+                String date = cursor.getString(cursor.getColumnIndex(EventDatabaseHelper.COLUMN_DATE));
+                String event = cursor.getString(cursor.getColumnIndex(EventDatabaseHelper.COLUMN_EVENT));
+                if(!date.isEmpty() && !event.isEmpty())
+                    dataModelArrayList.add(new DataModel(date,event));
+            }while (cursor.moveToNext());
+            return dataModelArrayList;
+        }
+        return null;
+    }
+
     @Override
     public void attachTexts(String date, String event) {
         Log.e(TAG,"date:"+date);
         Log.e(TAG,"event:"+event);
         databaseHelper.insertData(date,event);
-        cursorAdapter.swapCursor(databaseHelper.getAllEvent());
+        dataModelArrayList.add(new DataModel(date,event));
+        tlAdapter.notifyDataSetChanged();
+//        cursorAdapter.swapCursor(databaseHelper.getAllEvent());
  //        cursorAdapter.notifyDataSetChanged();
     }
 

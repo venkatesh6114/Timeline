@@ -13,8 +13,8 @@ public class EventDatabaseHelper {
     private static int DATABASE_VERSION = 1;
     private static String TABLE_NAME = "event_table";
     private static String COLUMN_ID = "_id";
-    private static String COLUMN_DATE = "date";
-    private static String COLUMN_EVENT = "event";
+    public static String COLUMN_DATE = "date";
+    public static String COLUMN_EVENT = "event";
 
     private DatabaseOpenHelper openHelper;
     private SQLiteDatabase database;
@@ -25,7 +25,7 @@ public class EventDatabaseHelper {
      }
 
      public void insertData(String date, String event){
-         Cursor cursor = getDataEvent(date);
+         Cursor cursor = getDateEvent(date);
 
 //         Log.e("timeline","Cursor.getCount():"+cursor.getCount());
 
@@ -52,7 +52,7 @@ public class EventDatabaseHelper {
          }
      }
 
-     public Cursor getDataEvent(String date){
+     public Cursor getDateEvent(String date){
             String query = "SELECT * from "+TABLE_NAME+" where "+COLUMN_DATE+" = '"+date+"'";
             return database.rawQuery(query,null);
      }

@@ -8,24 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
-import java.sql.Time;
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TimelineViewHolder>{
-//    public String[] mDataSet;
+    public ArrayList<DataModel> mDataModel;
     public  static class TimelineViewHolder extends RecyclerView.ViewHolder{
-    TextView mTextView;
+    TextView dataTextView,eventTextView;
 
     public TimelineViewHolder(View v) {
             super(v);
-            mTextView = v.findViewById(R.id.card_textView);
-            Log.e("Adapter:","ViewHolder");
+            dataTextView = v.findViewById(R.id.card_event_date);
+            eventTextView = v.findViewById(R.id.card_event_name);
         }
     }
 
-    public TimelineAdapter() {
-//        mDataSet = mDataSet;
+    public TimelineAdapter(ArrayList<DataModel> mDataModel) {
+        if(mDataModel!=null)
+            this.mDataModel = mDataModel;
     }
 
     @NonNull
@@ -39,14 +39,15 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
 
     @Override
     public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
-        Log.e("Adapter:","onBindViewHolder");
-        holder.mTextView.setText("Venki");
+        String date = mDataModel.get(position).date;
+        String event_name = mDataModel.get(position).event_name;
+        holder.dataTextView.setText(date);
+        holder.eventTextView.setText(event_name);
     }
 
     @Override
     public int getItemCount() {
-        Log.e("Adapter:","getItemCount");
-        return 1;
+        return mDataModel.size();
     }
 
 

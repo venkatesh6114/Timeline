@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
     public ArrayList<DataModel> getStringArray(Cursor cursor){
         if(cursor!=null) {
             cursor.moveToFirst();
+            if(cursor.getCount() == 0)
+                return null;
             do {
                 String date = cursor.getString(cursor.getColumnIndex(EventDatabaseHelper.COLUMN_DATE));
                 String event = cursor.getString(cursor.getColumnIndex(EventDatabaseHelper.COLUMN_EVENT));

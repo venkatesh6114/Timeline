@@ -47,6 +47,8 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
 
     @Override
     public int getItemCount() {
+        if(mDataModel==null)
+            return 0;
         return mDataModel.size();
     }
 

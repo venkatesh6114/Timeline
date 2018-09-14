@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
 
 <com.example.venki.timeline.TimelineRecyclerView
     android:id="@+id/marker"
     android:layout_height="match_parent"
     android:layout_width="wrap_content"
     app:markerSize="20dp"
-    app:lineSize="20dp"
+    app:lineSize="3dp"
     app:line="@color/colorPrimary"
+    app:linePadding="5dp"
     />
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardBackgroundColor="@color/cardview_light_background"
         card_view:cardCornerRadius="@dimen/cardview_default_radius"
@@ -28,15 +33,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            >
 
             <TextView
                 android:id="@+id/card_event_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="24sp"
+                android:textSize="12sp"
                 />
 
             <TextView

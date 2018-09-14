@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
 
     <android.support.design.widget.AppBarLayout
@@ -28,6 +29,8 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
         android:scrollbars="vertical"
+        android:paddingTop="?attr/actionBarSize"
+        android:layout_marginTop="10dp"
         />
 
 

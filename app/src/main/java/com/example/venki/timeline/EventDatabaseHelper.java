@@ -38,7 +38,7 @@ public class EventDatabaseHelper {
          ContentValues cv = new ContentValues();
          cv.put(COLUMN_DATE, date);
 
-         if(cursor.getCount()>0) {
+         if(cursor.getCount() > 0) {
              cv.put(COLUMN_EVENT, oldEvent+"\n"+event);
              database.update(TABLE_NAME, cv, COLUMN_DATE + " = ? ", new String[]{date});
          }
@@ -54,7 +54,7 @@ public class EventDatabaseHelper {
      }
 
      public Cursor getAllEvent(){
-        String query = "SELECT * from "+TABLE_NAME;
+        String query = "SELECT * from "+TABLE_NAME+" ORDER BY "+COLUMN_DATE;
         return database.rawQuery(query,null);
      }
 

@@ -146,11 +146,17 @@ public class InputEventDialog extends AppCompatDialogFragment {
 
 
     private String getCurrentDate() {
-        return new StringBuilder().append(doubleDigit(calendar.get(Calendar.DAY_OF_MONTH)))
+/*        return new StringBuilder().append(doubleDigit(calendar.get(Calendar.DAY_OF_MONTH)))
                             .append("/")
                             .append(doubleDigit(calendar.get(Calendar.MONTH)+1))
                             .append("/")
                             .append(calendar.get(Calendar.YEAR)).toString();
+                            */
+        return new StringBuilder().append(calendar.get(Calendar.YEAR))
+                .append("/")
+                .append(doubleDigit(calendar.get(Calendar.MONTH)+1))
+                .append("/")
+                .append(doubleDigit(calendar.get(Calendar.DAY_OF_MONTH))).toString();
     }
 
     private String doubleDigit(int a){
@@ -160,18 +166,29 @@ public class InputEventDialog extends AppCompatDialogFragment {
     private DatePickerDialog.OnDateSetListener date_range_listener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-            date_textField.setText(new StringBuilder()
+/*            date_textField.setText(new StringBuilder()
                             .append(doubleDigit(day))
                             .append("/").append(doubleDigit(month+1))
                             .append("/").append(year));
+                            */
+            date_textField.setText(new StringBuilder()
+                    .append(year)
+                    .append("/").append(doubleDigit(month+1))
+                    .append("/").append(doubleDigit(day)));
         }
     };
 
     private void showPickerDialog(){
         String fieldDate = date_textField.getText().toString();
+/*
         int day = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[0])));
         int month = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[1])-1));
         int year = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[2])));
+        */
+        int day = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[2])));
+        int month = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[1])-1));
+        int year = Integer.parseInt(doubleDigit(Integer.parseInt(fieldDate.split("/")[0])));
+
         new DatePickerDialog(getContext(),date_range_listener,
                 year,
                 month,

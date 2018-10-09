@@ -12,6 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,14 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity
+        <!--
+            <activity
             android:name=".CreateTimelineActivity"
             android:label="@string/title_activity_create_timeline"
             android:theme="@android:style/ThemeOverlay.Material.Dialog" />
+        -->
 
-            -->
+        <activity
+            android:name=".SingleDateActivity"
+            android:label="@string/title_activity_single_event"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"
+            >
 
-        <activity android:name=".TodoCursorAdapter"></activity>
+        </activity>
     </application>
 
 </manifest>

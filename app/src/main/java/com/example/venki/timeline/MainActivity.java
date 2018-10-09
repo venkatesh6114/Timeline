@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
     private TimelineAdapter tlAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DataModel> dataModelArrayList;
+    public static final String SINGLE_EVENT_DATE = "single_event_date";
+    public static final String SINGLE_EVENT_NAME = "single_event_name";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +81,12 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
         databaseHelper = new EventDatabaseHelper(this);
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setOnClickListener(new View.OnClickListener() {
+       /* recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e(TAG,"RecyclerView on Clicked");
             }
-        });
+        });*/
         recyclerView.setHasFixedSize(true);
 
 
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements  InputEventDialog
 
         dataModelArrayList = new ArrayList<DataModel>();
 
-        tlAdapter = new TimelineAdapter(getStringArray(databaseHelper.getAllEvent()));
+        tlAdapter = new TimelineAdapter(this,getStringArray(databaseHelper.getAllEvent()));
         recyclerView.setAdapter(tlAdapter);
 
 /*        new Handler().post(new Runnable() {

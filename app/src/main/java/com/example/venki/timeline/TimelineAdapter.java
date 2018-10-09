@@ -1,6 +1,7 @@
 package com.example.venki.timeline;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -18,28 +19,33 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
     public ArrayList<DataModel> mDataModel;
     private Context mContext;
 
-    @Override
-    public int getItemViewType(int position) {
-        Log.e("venki","getItemViewType:"+position+",count:"+getItemCount());
-        return TimelineRecyclerView.getTimeLineViewType(position,getItemCount());
-    }
 
-
-    public  static class TimelineViewHolder extends RecyclerView.ViewHolder{
+    public class TimelineViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     TextView dataTextView,eventTextView;
     TimelineRecyclerView timelineRecyclerView;
 
-    public TimelineViewHolder(View itemView,int viewType) {
+        public TimelineViewHolder(View itemView,int viewType) {
             super(itemView);
             dataTextView = itemView.findViewById(R.id.card_event_date);
             eventTextView = itemView.findViewById(R.id.card_event_name);
             timelineRecyclerView = itemView.findViewById(R.id.marker);
             Log.e("venki","viewType::"+viewType);
             timelineRecyclerView.initLine(viewType);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            DataModel currentModel = TimelineAdapter.this.mDataModel.get(getLayoutPosition());
+            Intent i = new Intent(view.getContext(),SingleDateActivity.class);
+            i.putExtra(MainActivity.SINGLE_EVENT_DATE,currentModel.date);
+            i.putExtra(MainActivity.SINGLE_EVENT_NAME,currentModel.event_name);
+            mContext.startActivity(i);
         }
     }
 
-    public TimelineAdapter(ArrayList<DataModel> mDataModel) {
+    public TimelineAdapter(Context context, ArrayList<DataModel> mDataModel) {
+        mContext = context;
         if(mDataModel!=null)
             this.mDataModel = mDataModel;
     }
@@ -47,18 +53,14 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
     @NonNull
     @Override
     public TimelineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
-        Log.e("venki","before inflate the view ");
+//        mContext = parent.getContext();
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout,parent,false);
-        Log.e("venki","before creating the view holder...");
         TimelineViewHolder vh = new TimelineViewHolder(v,viewType);
-        Log.e("Adapter:","exiting oncreateViewHolder");
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimelineViewHolder holder, int position) {
-        Log.e("Adapter:","entering onBindViewHolder");
+    public void onBindViewHolder(@NonNull TimelineViewHolder holder, final int position) {
         String date = mDataModel.get(position).date;
         String event_name = mDataModel.get(position).event_name;
         holder.dataTextView.setText(date);
@@ -73,5 +75,9 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
         return mDataModel.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return TimelineRecyclerView.getTimeLineViewType(position,getItemCount());
+    }
 
 }

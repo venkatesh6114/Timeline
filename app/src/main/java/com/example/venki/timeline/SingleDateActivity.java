@@ -22,7 +22,7 @@ public class SingleDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_event);
 
         date = getIntent().getStringExtra(MainActivity.SINGLE_EVENT_DATE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(date);
 
         setSupportActionBar(toolbar);
@@ -31,7 +31,6 @@ public class SingleDateActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         eventName = getIntent().getStringExtra(MainActivity.SINGLE_EVENT_NAME);
-        Toast.makeText(this, date+", "+eventName, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.single_date_recyclerview);
         recyclerView.setHasFixedSize(true);

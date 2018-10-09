@@ -20,12 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-            <activity
-            android:name=".CreateTimelineActivity"
-            android:label="@string/title_activity_create_timeline"
-            android:theme="@android:style/ThemeOverlay.Material.Dialog" />
-        -->
 
         <activity
             android:name=".SingleDateActivity"

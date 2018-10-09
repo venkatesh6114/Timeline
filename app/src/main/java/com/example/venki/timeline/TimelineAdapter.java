@@ -29,7 +29,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.Timeli
             dataTextView = itemView.findViewById(R.id.card_event_date);
             eventTextView = itemView.findViewById(R.id.card_event_name);
             timelineRecyclerView = itemView.findViewById(R.id.marker);
-            Log.e("venki","viewType::"+viewType);
+     //       Log.e("venki","viewType::"+viewType);
             timelineRecyclerView.initLine(viewType);
             itemView.setOnClickListener(this);
         }

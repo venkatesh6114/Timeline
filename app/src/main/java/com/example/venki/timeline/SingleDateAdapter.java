@@ -17,7 +17,7 @@ public class SingleDateAdapter extends RecyclerView.Adapter<SingleDateAdapter.Da
     private String TAG="SingleDateAdapter";
 
     public SingleDateAdapter(String date,String eventName) {
-        Log.e(TAG,"inSingleDateAdapter constructor");
+   //     Log.e(TAG,"inSingleDateAdapter constructor");
         this.date = date;
         event = eventName.split("\n");
     }
@@ -36,8 +36,7 @@ public class SingleDateAdapter extends RecyclerView.Adapter<SingleDateAdapter.Da
     @Override
     public DateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.datewise_card_layout,parent,false);
-        DateViewHolder dvh = new DateViewHolder(v);
-        return dvh;
+        return new DateViewHolder(v);
     }
 
 
@@ -50,7 +49,6 @@ public class SingleDateAdapter extends RecyclerView.Adapter<SingleDateAdapter.Da
 
     @Override
     public int getItemCount() {
-        Log.e(TAG,"in getItemCount:"+event.length);
         return event.length;
     }
 }

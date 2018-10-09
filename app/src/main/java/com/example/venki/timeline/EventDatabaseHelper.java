@@ -27,8 +27,6 @@ public class EventDatabaseHelper {
      public void insertData(String date, String event){
          Cursor cursor = getDateEvent(date);
 
-//         Log.e("timeline","Cursor.getCount():"+cursor.getCount());
-
          String oldEvent="";
          if (cursor.moveToFirst()){
              do{
@@ -36,8 +34,6 @@ public class EventDatabaseHelper {
              }while(cursor.moveToNext());
          }
          cursor.close();
-
- //        Log.e("timeline","OLD Event:"+oldEvent);
 
          ContentValues cv = new ContentValues();
          cv.put(COLUMN_DATE, date);

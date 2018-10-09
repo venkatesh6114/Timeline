@@ -20,7 +20,6 @@ public class TimelineRecyclerView extends View {
     private Drawable mEndLine;
     private int mMarkerSize;
     private int mLineSize;
-    private int mLineOrientation;
     private int mLinePadding;
     private boolean mMarkerInCenter;
     private Rect mBounds;
@@ -29,7 +28,7 @@ public class TimelineRecyclerView extends View {
     public TimelineRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        Log.e("venki","in TimeLineRecyclerView");
+     //   Log.e("venki","in TimeLineRecyclerView");
         init(attrs);
     }
 
@@ -40,7 +39,7 @@ public class TimelineRecyclerView extends View {
         mEndLine = typedArray.getDrawable(R.styleable.timeline_view_line);
         mMarkerSize = typedArray.getDimensionPixelSize(R.styleable.timeline_view_markerSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, mContext.getResources().getDisplayMetrics()));
         mLineSize = typedArray.getDimensionPixelSize(R.styleable.timeline_view_lineSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, mContext.getResources().getDisplayMetrics()));
-        mLineOrientation = typedArray.getInt(R.styleable.timeline_view_lineOrientation, 1);
+ //       mLineOrientation = typedArray.getInt(R.styleable.timeline_view_lineOrientation, 1);
         mLinePadding = typedArray.getDimensionPixelSize(R.styleable.timeline_view_lineSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mContext.getResources().getDisplayMetrics()));
         mMarkerInCenter = typedArray.getBoolean(R.styleable.timeline_view_markerInCenter, true);
         typedArray.recycle();
@@ -58,7 +57,7 @@ public class TimelineRecyclerView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.e("venki","in onMeasure");
+//        Log.e("venki","in onMeasure");
         int w = mMarkerSize + getPaddingLeft() + getPaddingRight();
         int h = mMarkerSize + getPaddingTop() + getPaddingBottom();
 
@@ -71,7 +70,7 @@ public class TimelineRecyclerView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.e("venki","in onSizeChanged");
+  //      Log.e("venki","in onSizeChanged");
         initDrawable();
 
     }
@@ -90,7 +89,7 @@ public class TimelineRecyclerView extends View {
 
         int markSize = Math.min(mMarkerSize, Math.min(cWidth, cHeight));
 
-        Log.e("RecyclerView","mMarkerInCenter:"+mMarkerInCenter);
+    //    Log.e("RecyclerView","mMarkerInCenter:"+mMarkerInCenter);
         if (mMarkerInCenter) { //Marker in center is true
 
             if (mMarker != null) {
@@ -105,7 +104,7 @@ public class TimelineRecyclerView extends View {
                 mBounds = mMarker.getBounds();
             }
         }
-        Log.e("venki", "Rect Bounds:" + mBounds.toString());
+    //    Log.e("venki", "Rect Bounds:" + mBounds.toString());
         int centerX = mBounds.centerX();
         int lineLeft = centerX - (mLineSize >> 1);
         //Vertical Line
@@ -120,7 +119,7 @@ public class TimelineRecyclerView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e("venki","in onDraw");
+    //    Log.e("venki","in onDraw");
         if(mMarker != null) {
             mMarker.draw(canvas);
         }

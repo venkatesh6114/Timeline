@@ -39,7 +39,6 @@ public class InputEventDialog extends AppCompatDialogFragment {
 
    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Log.e("Timeline","onCreateDialog(bundle)");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
@@ -74,7 +73,6 @@ public class InputEventDialog extends AppCompatDialogFragment {
         });
 
         mHandler = new Handler(Looper.getMainLooper());
-        Log.e("Timeline>> :",getClass().getSuperclass().toString());
         TextView title = new TextView(getContext());
         title.setGravity(Gravity.CENTER);
         title.setText("Create Event");
@@ -100,6 +98,7 @@ public class InputEventDialog extends AppCompatDialogFragment {
                         else {
                             canCloseDialog(dialogInterface, false);
                             event_err_msg.setVisibility(View.VISIBLE);
+                            mHandler.removeCallbacksAndMessages(null);
                             mHandler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -120,14 +119,7 @@ public class InputEventDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         canCloseDialog(dialogInterface,true);
                     }
-                })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        Log.e("Timeline:","in onDismiss");
-                    }
-                })
-                ;
+                });
 
         return builder.create();
     }
@@ -156,7 +148,7 @@ public class InputEventDialog extends AppCompatDialogFragment {
     private String getCurrentDate() {
         return new StringBuilder().append(doubleDigit(calendar.get(Calendar.DAY_OF_MONTH)))
                             .append("/")
-                            .append(doubleDigit(calendar.get(Calendar.MONTH)))
+                            .append(doubleDigit(calendar.get(Calendar.MONTH)+1))
                             .append("/")
                             .append(calendar.get(Calendar.YEAR)).toString();
     }
